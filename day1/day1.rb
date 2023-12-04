@@ -9,20 +9,13 @@ def first_word(string)
   numbers_dict.each do |k, v|
     key = k.to_s
     value = v.to_s
-
     first_spelled_digit_idx = string.index(key)
     first_digit_idx = string.index(value)
-
-    if first_spelled_digit_idx.nil?
-      if first_digit_idx.nil?
-        next
-      else
-        first_word[first_digit_idx] = value
-      end
-    else
-      first_word[first_spelled_digit_idx] = value
-    end
+    first_word[first_digit_idx] = value
+    first_word[first_spelled_digit_idx] = value
   end
+
+  first_word.delete(nil)
 
   if first_word.empty?
     nil
@@ -38,22 +31,13 @@ def last_word(string)
   numbers_dict.each do |k, v|
     key = k.to_s
     value = v.to_s
-
-    first_spelled_digit_idx = string.index(key)
-    first_digit_idx = string.index(value)
-
-    if first_spelled_digit_idx.nil?
-      if first_digit_idx.nil?
-        next
-      else
-        last_word[first_digit_idx] = value
-      end
-    else
-      last_word[first_spelled_digit_idx] = value
-      #logic missing version where both digit and word are not nil
-    end
+    first_spelled_digit_idx = string.rindex(key)
+    first_digit_idx = string.rindex(value)
+    last_word[first_digit_idx] = value
+    last_word[first_spelled_digit_idx] = value
   end
-  puts last_word
+
+  last_word.delete(nil)
   if last_word.empty?
     nil
   else
@@ -64,10 +48,8 @@ end
 def calibration_sum(data)
   number_sum = 0
   data.each do |str|
-    if str.include?('oneight')
-      number_sum += (first_word(str) + last_word(str)).to_i
-      puts("#{first_word(str)} + #{last_word(str)} = #{number_sum} --> #{str}")
-    end
+    number_sum += (first_word(str) + last_word(str)).to_i
+    puts("#{first_word(str)} + #{last_word(str)} = #{(first_word(str) + last_word(str)).to_i} #{number_sum} --> #{str}")
   end
   number_sum
 end
