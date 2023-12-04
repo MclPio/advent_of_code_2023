@@ -46,6 +46,34 @@ def str_to_hash(str)
   end
   hash
 end
+# sample hash_arr
+# [{"red"=>4, "green"=>0, "blue"=>3}, {"red"=>1, "green"=>2, "blue"=>6}, {"red"=>0, "green"=>2, "blue"=>0}]
+
+def min_cubes(hash_arr)
+  max_hash = { 'red' => 0, 'green' => 0, 'blue' => 0 }
+  hash_arr.each do |item|
+    item.each do |k, v|
+      max_hash[k] = v if v > max_hash[k]
+   end
+  end
+  max_hash
+end
+
+def power_sum(data)
+  power_sum = 0
+
+  data.each do |line|
+    line_arr = line[7..].split(';')
+    hash_arr = []
+    line_arr.each_with_index do |round|
+      hash_arr << str_to_hash(round)
+    end
+    power_set = min_cubes(hash_arr)
+    power_set # each line's min cubes
+    power_sum += power_set.values.inject(:*)
+  end
+  power_sum
+end
 
 def test_game(data)
   valid_games = []
@@ -69,4 +97,5 @@ end
 
 #puts hash_valid?(reference_hash, test_hash)
 #puts str_to_hash('2 green')
-puts test_game(file_data)
+puts power_sum(file_data)
+#puts min_cubes([{"red"=>4, "green"=>0, "blue"=>3}, {"red"=>1, "green"=>2, "blue"=>6}, {"red"=>0, "green"=>2, "blue"=>0}])
