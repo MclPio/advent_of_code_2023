@@ -49,20 +49,47 @@ def check_sides(numbers, symbols)
     end
   end
   valid_numbers unless valid_numbers.empty?
+  # Should ignore/delete numbers already added...
 end
 
-input_array.each do |line|
+def check_top(numbers, symbols)
+
+  # check above the number position if symbol is directley above the range
+  # If symbol is within number range
+  #   add number to valid numbers
+  # Remove numbers validated from numbers line...
+  # {3=>"*"}
+  # {2=>"35", 6=>"633"}
+  valid_numbers = []
+  numbers.each do |n_position, n_value|
+    min_pos = n_position
+    max_pos = n_position + n_value.length - 1
+    symbols.each do |s_position, s_value|
+      if s_position.between?(min_pos, max_pos)
+        valid_numbers << n_value
+      end
+    end
+  end
+  valid_numbers unless valid_numbers.empty?
+end
+
+previous_symbols = nil
+valid_numbers = []
+input_array.each_with_index do |line, idx|
   #puts("symbols: #{positon_symbol(line)}, numbers: #{position_number(line)}")
   symbols = positon_symbol(line)
   numbers = position_number(line)
-  puts check_sides(numbers, symbols)
+  # skip first iteration to check top
+  if idx > 0
+    check_top(numbers, previous_symbols)
+  end
+  previous_symbols = symbols
 end
 
 # Test Input
 # 467..114..
-# ...2*2......
+# ...*......
 # ..35..633.
-# ......#...
 # 617*......
 # .....+.58.
 # ..592.....
