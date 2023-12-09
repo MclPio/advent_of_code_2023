@@ -21,24 +21,9 @@ def position_number(string)
   # Converts into numbers array: ["467", "114"]
   # Finds postion and stores in positions: [0, 5]
   # Returns a hash of { position => number }: {0=>"467", 5=>"114"}
+  # Assumes there are no duplicates
   numbers = string.split(/[^0-9]/).reject { |num| num.empty? }
-  positions = []
-  unless numbers.empty?
-    numbers.each do |number|
-      index = 0
-      print positions
-      dynamic_string = string[index..]
-      find_index = dynamic_string.index(number)
-      if positions.include?(find_index)
-        index += number.length + find_index
-      #need to rethink this? will there even be duplicates?
-      else
-        positions << find_index
-      end
-    end
-  end
-  positions
-  # need a way to get positions and also account for duplicates or else I will get one number back
+  positions = numbers.map { |number| string.index(number) }
   Hash[positions.zip(numbers)]
 end
 
@@ -59,7 +44,6 @@ def check_sides(numbers, symbols)
 
     symbols.each do |s_position, s_value|
       if s_position.between?(min_pos, max_pos)
-        puts("#{min_pos}#{max_pos}")
         valid_numbers << n_value
       end
     end
@@ -67,13 +51,12 @@ def check_sides(numbers, symbols)
   valid_numbers unless valid_numbers.empty?
 end
 
-# input_array.each do |line|
-#   puts("symbols: #{positon_symbol(line)}, numbers: #{position_number(line)}")
-#   symbols = positon_symbol(line)
-#   numbers = position_number(line)
-#   puts numbers
-#   check_sides(numbers, symbols)
-# end
+input_array.each do |line|
+  #puts("symbols: #{positon_symbol(line)}, numbers: #{position_number(line)}")
+  symbols = positon_symbol(line)
+  numbers = position_number(line)
+  puts check_sides(numbers, symbols)
+end
 
 # Test Input
 # 467..114..
