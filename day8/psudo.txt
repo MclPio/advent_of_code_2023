@@ -1,0 +1,26 @@
+hash_table = {"11A"=>["11B", "XXX"], "11B"=>["XXX", "11Z"], 
+              "11Z"=>["11B", "XXX"], "22A"=>["22B", "XXX"], 
+              "22B"=>["22C", "22C"], "22C"=>["22Z", "22Z"], 
+              "22Z"=>["22B", "22B"], "XXX"=>["XXX", "XXX"]}
+
+table_a = {"11A"=>["11B", "XXX"], "22A"=>["22B", "XXX"]}
+
+instructions = ['L','R'].cycle
+table_one = table_a
+table_two = {}
+
+loop do
+  table_two.clear
+  direction = instructions.next => 'L' => 'R'
+  table_one.each do |node, option|
+    if direction == 'L'
+      table_two[option[0]] = hash_table[option[0]]  table_two = {'11Z' => ["XXX", "11Z"], '22Z' => ["22Z", "22Z"]}
+    elsif direction == 'R'
+      table_two[option[1]] = hash_table[option[1]]
+    end
+  end
+  table_one.clear => table_one = {}
+  table_one = table_two  => table_one = {'11B' => ["XXX", "11Z"], '22C' => ["22Z", "22Z"]}
+
+  break if table_one keys end with Z 'XXZ' return count
+end
